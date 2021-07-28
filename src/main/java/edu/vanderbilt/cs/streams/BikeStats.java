@@ -42,6 +42,8 @@ public class BikeStats {
      * @return
      */
     public Stream<BikeRide.DataFrame> averagedDataFrameStream(int windowSize){
+        
+        
         return Stream.empty();
     }
 

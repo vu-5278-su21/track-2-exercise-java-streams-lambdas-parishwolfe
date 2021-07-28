@@ -14,7 +14,13 @@ public class StreamUtils {
     // data points. You should only return complete windows. Each window should be
     // a list of the data points present at that step of the window sliding.
     public static <T> Stream<List<T>> slidingWindow(List<T> data, int windowSize){
-
+        if (windowSize < 1) {return Stream.empty();}
+        else {
+        	return IntStream.range(0, data.size() - windowSize + 1)
+        			.mapToObj(i -> data.subList(i, i + windowSize));
+        }
+    
+            
         // Let's assume that we have
         // data = a, b, c, d, e, f
         //
@@ -35,11 +41,10 @@ public class StreamUtils {
         //
         // 1. This is solvable in ~3-4 lines of code
         // 2. Think of how you could use IntStream.range()
-        // 3. List.subLIst will be useful to you
+        // 3. List.subList will be useful to you
         // 4. A windowSize < 1 should return an empty stream
-
-        return Stream.empty();
     }
+
 
     /**
      * @ToDo:
@@ -66,11 +71,18 @@ public class StreamUtils {
      */
     public static <T> Function<List<T>, Double> averageOfProperty(ToDoubleFunction<T> f){
         return (List<T> window) -> {
+            double sum = 0;
+            for (T t : window) {
+                sum += f.applyAsDouble(t);
+            }
+            return sum / window.size();
+        };
+    
             // You need to update this code here to
             // return the average of the property that
             // is extracted with the function `f`
-            return 0.0;
+            //return 0.0;
         };
     }
 
-}
+
